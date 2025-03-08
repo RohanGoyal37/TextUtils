@@ -49,10 +49,10 @@
     </div>
 
     <div class="container-fluid">
-        <form action='/analyze' method="post"> {% csrf_token %} # this is used to secure the form from cross site request forgery
+        <form action='/analyze' method="post"> {% csrf_token %} <!-- this is used to secure the form from cross site request forgery -->
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Enter your text here and let Text Utils do the magic</label>
-                <textarea class="form-control" name='text' id="exampleFormControlTextarea1" rows="9"></textarea>
+                <textarea class="form-control mt-2" name='text' id="exampleFormControlTextarea1" rows="9"></textarea>
             </div>
 
             <div class="form-check form-switch mt-2">
