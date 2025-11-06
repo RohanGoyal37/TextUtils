@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✨ TextUtils
+# ✨ Textify
 
 ### A powerful yet simple text processing toolkit built with Django
 
@@ -35,9 +35,9 @@
 
 ## 🎯 About The Project
 
-**TextUtils** is a Django-based web application designed to simplify text processing tasks. Whether you're a writer, developer, or content creator, TextUtils provides essential utilities to clean, format, and analyze your text efficiently.
+**Textify** is a Django-based web application designed to simplify text processing tasks. Whether you're a writer, developer, or content creator, Textify provides essential utilities to clean, format, and analyze your text efficiently.
 
-### Why TextUtils?
+### Why Textify?
 
 - **Fast & Efficient** — Process text instantly without complex software
 - **User-Friendly** — Clean interface with minimal learning curve
@@ -108,7 +108,7 @@
 
 ## 🚀 Getting Started
 
-Follow these steps to set up TextUtils locally on your machine.
+Follow these steps to set up Textify locally on your machine.
 
 ### Prerequisites
 
@@ -120,8 +120,8 @@ Follow these steps to set up TextUtils locally on your machine.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/RohanGoyal37/TextUtils.git
-   cd TextUtils
+   git clone https://github.com/RohanGoyal37/Textify.git
+   cd Textify
    ```
 
 2. **Create a virtual environment** (recommended)
@@ -177,14 +177,14 @@ Follow these steps to set up TextUtils locally on your machine.
 ## 📁 Project Structure
 
 ```
-TextUtils/
+Textify/
 │
 ├── manage.py                 # Django management script
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # Project documentation
 ├── LICENSE                   # MIT License file
 │
-├── textutils/               # Project configuration
+├── textify/               # Project configuration
 │   ├── __init__.py
 │   ├── settings.py          # Django settings
 │   ├── urls.py              # URL routing
@@ -221,7 +221,7 @@ The MIT License is a permissive license that allows:
 **Rohan Goyal**
 
 - GitHub: [@RohanGoyal37](https://github.com/RohanGoyal37)
-- Project Link: [https://github.com/RohanGoyal37/TextUtils](https://github.com/RohanGoyal37/TextUtils)
+- Project Link: [https://github.com/RohanGoyal37/Textify](https://github.com/RohanGoyal37/Textify)
 - Live Demo: [https://37rohan.pythonanywhere.com/](https://37rohan.pythonanywhere.com/)
 
 ---
