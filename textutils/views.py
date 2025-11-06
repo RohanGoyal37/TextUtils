@@ -5,7 +5,7 @@ def index(request):
     return render(request, 'index.html')
 
 def analyze(request):
-    djtext = request.POST.get('text', 'default')
+    djtext = request.POST.get('text', '')
 
     removepunc = request.POST.get('removepunc', 'off')
     fullcaps = request.POST.get('fullcaps', 'off')
@@ -13,44 +13,38 @@ def analyze(request):
     extraspaceremover = request.POST.get('extraspaceremover', 'off')
     charcount = request.POST.get('charcount', 'off')
 
-    params = {}
+    analyzed = djtext
 
     if removepunc == 'on':
         punctuations = '''!()-[]{};:'",<>./?@#$%^&*_~'''
-        analyzed = "".join([char for char in djtext if char not in punctuations])
-        params = {'purpose': 'Removed Punctuations', 'analyzed_text': analyzed}
-        djtext = analyzed
+        analyzed = "".join([char for char in analyzed if char not in punctuations])
 
     if fullcaps == 'on':
-        analyzed = djtext.upper()
-        params = {'purpose': 'Changed to Uppercase', 'analyzed_text': analyzed}
-        djtext = analyzed
+        analyzed = analyzed.upper()
 
     if newlineremover == 'on':
-        analyzed = "".join([char for char in djtext if char not in ("\n", "\r")])
-        params = {'purpose': 'Removed Newlines', 'analyzed_text': analyzed}
-        djtext = analyzed
+        analyzed = "".join([char for char in analyzed if char not in ("\n", "\r")])
 
     if extraspaceremover == 'on':
-        analyzed = ""
-        for index, char in enumerate(djtext):
-            if not (char == " " and index+1 < len(djtext) and djtext[index+1] == " "):
-                analyzed += char
-        params = {'purpose': 'Extra Space Removed', 'analyzed_text': analyzed}
-        djtext = analyzed
+        analyzed = " ".join(analyzed.split())
 
-    if charcount == 'on':
-        analyzed = len(djtext)
-        params = {
-            'purpose': 'Let\'s Count the Characters',
-            'count': analyzed,
-            'heading': 'Total Characters in the Text - ',
-        }
+    # ✅ Count characters & words properly
+    character_count = len(analyzed) if charcount == 'on' else None
+    word_count = len(analyzed.split()) if charcount == 'on' else None
 
-    if not params:
+    if (removepunc == fullcaps == newlineremover == extraspaceremover == charcount == 'off'):
         return render(request, 'index.html', {'error': 'Please select at least one option'})
 
-    return render(request, 'analyze.html', params)
+    return render(request, 'analyze.html', {
+        'analyzed_text': analyzed,
+        'count': character_count,
+        'word_count': word_count,
+        'purpose': "Text Analyzed Successfully ✅",
+        'heading': "Total Characters"
+    })
+
+
+    return render(request, 'index.html', params)
 
 def about(request):
     return render(request, 'about.html')

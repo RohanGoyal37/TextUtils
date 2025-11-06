@@ -2,106 +2,918 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>TextUtils - Transform Your Text Instantly ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-    <title>TextUtils</title>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f1f5f9;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 7s;
+        }
+
+        .shape3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--success), var(--primary));
+            top: 50%;
+            right: 10%;
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(0, 100px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(-50px, 50px) rotate(270deg);
+            }
+        }
+
+
+        /* Hero Section */
+        .hero-section {
+            padding: 4rem 0 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.6s ease;
+        }
+
+        .hero-section.minimized {
+            padding: 2rem 0 1rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+            transition: all 0.6s ease;
+        }
+
+        .hero-section.minimized .hero-badge {
+            display: none;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease-out;
+            transition: all 0.6s ease;
+        }
+
+        .hero-section.minimized .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            transition: all 0.6s ease;
+        }
+
+        .hero-section.minimized .hero-subtitle {
+            display: none;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            transition: all 0.6s ease;
+        }
+
+        .hero-section.minimized .stats-container {
+            display: none;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Alert */
+        .alert-custom {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px;
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Analysis Container - Initially centered, then splits */
+        .analysis-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .analysis-container.split-view {
+            grid-template-columns: 1fr 1fr;
+            max-width: 100%;
+        }
+
+        .input-panel,
+        .output-panel {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Output panel hidden initially */
+        .output-panel {
+            display: none;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .output-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Main Card */
+        .main-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(99, 102, 241, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .form-label {
+            color: var(--text-light);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            color: var(--text-light);
+            border-radius: 15px;
+            padding: 1.2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+        /* Feature Grid */
+        .features-header {
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .features-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .features-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 5px 15px rgba(99, 102, 241, 0.5));
+        }
+
+        .feature-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .form-check-input {
+            width: 3.5rem;
+            height: 1.8rem;
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .form-check-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-left: 1rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* CTA Button */
+        .btn-analyze {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 1.2rem 4rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-analyze::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-analyze:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Output Panel Styles */
+        .output-content {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            min-height: 200px;
+        }
+
+        .output-text {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .processing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary-action {
+            flex: 1;
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            color: var(--text-light);
+            padding: 0.8rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary-action:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
+        }
+
+        .benefits-section.hidden {
+            display: none;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-text {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .analysis-container.split-view {
+                grid-template-columns: 1fr;
+            }
+
+            .output-panel {
+                transform: translateY(50px);
+            }
+
+            .output-panel.active {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .main-card {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .btn-analyze {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">TextUtils.com</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="animated-bg">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+    </div>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact">Contact Us</a>
-                    </li>
+    {% include 'navbar.html' %}
 
-                </ul>
-            </div>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+    <div class="container mt-4">
+        <div class="alert alert-custom alert-dismissible fade show" role="alert">
+            <strong>🎉 Welcome to TextUtils!</strong> Transform your text with powerful AI-driven analysis tools. Join
+            thousands of users optimizing their content daily!
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </nav>
-
-    <div class="alert alert-success" role="alert">
-        <strong>Welcome To TextUtils!</strong> You can do anythin with your text here. Happy Texting!
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="container-fluid">
-        <form action='/analyze' method="post"> {% csrf_token %} <!-- this is used to secure the form from cross site request forgery -->
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Enter your text here and let Text Utils do the magic</label>
-                <textarea class="form-control mt-2" name='text' id="exampleFormControlTextarea1" rows="9"></textarea>
-            </div>
+    <div class="hero-section" id="heroSection">
+        <div class="container">
+            <div class="hero-badge">🚀 #1 Text Processing Tool</div>
+            <h1 class="hero-title">Transform Your Text<br>In Seconds</h1>
+            <p class="hero-subtitle">The ultimate toolkit for text analysis, formatting, and optimization.<br>Fast,
+                powerful, and completely free.</p>
 
-            <div class="form-check form-switch mt-2">
-                <input class="form-check-input" name="removepunc" type="checkbox" role="switch"
-                    id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Remove Punctuation</label>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Texts Analyzed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free Forever</div>
+                </div>
             </div>
-
-            <div class="form-check form-switch">
-                <input class="form-check-input" name="fullcaps" type="checkbox" role="switch"
-                    id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Uppercase</label>
-            </div>
-
-            <div class="form-check form-switch">
-                <input class="form-check-input" name="newlineremover" type="checkbox" role="switch"
-                    id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Remove New Lines</label>
-            </div>
-
-            <div class="form-check form-switch">
-                <input class="form-check-input" name="extraspaceremover" type="checkbox" role="switch"
-                    id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Remove Extra Spaces</label>
-            </div>
-
-            <div class="form-check form-switch">
-                <input class="form-check-input" name="charcount" type="checkbox" role="switch"
-                    id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Count the Character</label>
-            </div>
-            <button type="submit" class="btn btn-dark mt-2">Analyze Text</button>
-        </form>
+        </div>
     </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+    <div class="analysis-container {% if show_output %}split-view{% endif %}" id="analysisContainer">
+        <!-- Input Panel -->
+        <div class="input-panel">
+            <div class="main-card">
+                <form action='/analyze' method="post" id="analyzeForm">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="textInput" class="form-label">
+                            <span>✍️</span> Enter Your Text Here
+                        </label>
+                        <textarea class="form-control" name='text' id="textInput" rows="10"
+                            placeholder="Paste or type your text here and watch the magic happen...">{{ original_text }}</textarea>
+                    </div>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+                    <div class="features-header">
+                        <h2 class="features-title">⚡ Choose Your Power Tools</h2>
+                        <p class="features-subtitle">Select one or more options to transform your text instantly</p>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <span class="feature-icon">🔤</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" name="removepunc" type="checkbox" role="switch"
+                                    id="removepunc">
+                                <label class="form-check-label" for="removepunc">
+                                    <div class="feature-title">Remove Punctuation</div>
+                                    <div class="feature-desc">Clean your text by removing all punctuation marks</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <span class="feature-icon">🔠</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" name="fullcaps" type="checkbox" role="switch"
+                                    id="fullcaps">
+                                <label class="form-check-label" for="fullcaps">
+                                    <div class="feature-title">Uppercase Transform</div>
+                                    <div class="feature-desc">Convert all text to UPPERCASE for emphasis</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <span class="feature-icon">📏</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" name="newlineremover" type="checkbox" role="switch"
+                                    id="newlineremover">
+                                <label class="form-check-label" for="newlineremover">
+                                    <div class="feature-title">Remove New Lines</div>
+                                    <div class="feature-desc">Merge all lines into a single continuous text</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <span class="feature-icon">🧹</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" name="extraspaceremover" type="checkbox" role="switch"
+                                    id="extraspaceremover">
+                                <label class="form-check-label" for="extraspaceremover">
+                                    <div class="feature-title">Remove Extra Spaces</div>
+                                    <div class="feature-desc">Eliminate unnecessary whitespace for cleaner text</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <span class="feature-icon">🔢</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" name="charcount" type="checkbox" role="switch"
+                                    id="charcount">
+                                <label class="form-check-label" for="charcount">
+                                    <div class="feature-title">Character Counter</div>
+                                    <div class="feature-desc">Get precise character and word counts instantly</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn-analyze">🚀 Analyze Text Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Output Panel (Hidden Initially) -->
+        <div class="output-panel {% if show_output %}active{% endif %}" id="outputPanel">
+            <div class="main-card">
+                <div class="panel-header">
+                    ⚡ Analysis Results
+                </div>
+
+                <div class="processing-badge">
+                    <span>✓</span> Processing Complete
+                </div>
+
+                <div class="output-content">
+                    <div class="output-text" id="outputText">
+                        {% if output_text %}
+                        {{ output_text }}
+                        {% else %}
+                        Your analyzed text will appear here...
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="stats-grid" id="statsGrid" {% if charcount %}style="display:grid"{% else %}style="display:none"{% endif %}>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statValue1">0</div>
+                        <div class="stat-label" id="statLabel1">Characters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statValue2">0</div>
+                        <div class="stat-label">Total Characters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statValue3">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-secondary-action" onclick="copyToClipboard()">
+                        📋 Copy Result
+                    </button>
+                    <button class="btn-secondary-action" onclick="downloadText()">
+                        💾 Download
+                    </button>
+                    <button class="btn-secondary-action" onclick="clearAll()">
+                        🔄 Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="benefits-section" id="benefitsSection">
+            <h2 class="text-center features-title mb-4">Why Choose TextUtils?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-title">Lightning Fast</div>
+                    <div class="benefit-text">Process thousands of characters in milliseconds</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🔒</div>
+                    <div class="benefit-title">100% Secure</div>
+                    <div class="benefit-text">Your text never leaves your browser</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💎</div>
+                    <div class="benefit-title">Always Free</div>
+                    <div class="benefit-text">No hidden fees, no subscriptions required</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📱</div>
+                    <div class="benefit-title">Mobile Friendly</div>
+                    <div class="benefit-text">Works perfectly on any device</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
+    <script>
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert('✅ Text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        function downloadText() {
+            const outputText = document.getElementById('outputText').textContent;
+            const blob = new Blob([outputText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'analyzed_text.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            if (confirm('Are you sure you want to start over?')) {
+                window.location.href = '/';
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,103 @@
+<style>
+/* Navbar Shared Styles */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #8b5cf6;
+    --text-light: #f1f5f9;
+}
+
+/* Navbar Base */
+.navbar {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: 900;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+    -webkit-background-clip: text; /* For Chrome/Safari */
+    background-clip: text; /* Standard property */
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+    color: var(--text-light) !important;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    width: 100%;
+}
+
+.btn-search {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border: none;
+    color: white;
+    padding: 0.6rem 1.4rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.btn-search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+.form-control {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 2px solid rgba(99, 102, 241, 0.3) !important;
+    color: var(--text-light) !important;
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    backdrop-filter: blur(12px);
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="/">✨ TextUtils</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
+              </li>
+          </ul>
+
+          <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search">
+              <button class="btn btn-search">Search</button>
+          </form>
+      </div>
+  </div>
+</nav>
